@@ -1,0 +1,20 @@
+from pydantic import BaseModel, EmailStr
+from typing import Optional
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    user_id: Optional[str] = None
+    email: Optional[str] = None
+
+class LoginRequest(BaseModel):
+    email: EmailStr
+    password: str
+
+class SupabaseAuthResponse(BaseModel):
+    access_token: str
+    refresh_token: str
+    user_id: str
+    email: str
