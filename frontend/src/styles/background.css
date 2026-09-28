@@ -1,0 +1,193 @@
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #05050d;
+  overflow: hidden;
+}
+
+/* Core Container */
+.nova-bg-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -9999;
+  pointer-events: none;
+  transition: background-color 1s ease;
+}
+
+.nova-bg-container.dark-mode {
+  background-color: #05050D;
+}
+
+.nova-bg-container.light-mode {
+  background-color: #FFFFFF;
+}
+
+/* Layer & Breathing Animation */
+.nova-bg-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  will-change: transform, opacity, filter;
+}
+
+.nova-breathe {
+  animation: nova-breathe-anim 12s ease-in-out infinite;
+}
+
+@keyframes nova-breathe-anim {
+  0% { 
+    transform: scale(1); 
+    opacity: 0.85; 
+    filter: brightness(1); 
+  }
+  50% { 
+    transform: scale(1.04); 
+    opacity: 1; 
+    filter: brightness(1.15); 
+  }
+  100% { 
+    transform: scale(1); 
+    opacity: 0.85; 
+    filter: brightness(1); 
+  }
+}
+
+/* Soft Lights */
+.nova-light {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.nova-bg-container.light-mode .nova-light {
+  mix-blend-mode: normal;
+}
+
+/* Variant 1: Dark Ray Field */
+.nova-light-left-blue {
+  width: 70vw;
+  height: 80vh;
+  left: -20vw;
+  top: 15vh;
+  background: radial-gradient(ellipse at center, rgba(37, 99, 235, 0.35) 0%, rgba(79, 70, 229, 0.15) 40%, transparent 70%);
+  filter: blur(100px);
+}
+
+.nova-light-center-magenta {
+  width: 80vw;
+  height: 60vh;
+  left: 10vw;
+  top: 35vh;
+  background: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.3) 0%, rgba(192, 38, 211, 0.2) 40%, transparent 70%);
+  filter: blur(120px);
+}
+
+.nova-light-right-orange {
+  width: 60vw;
+  height: 80vh;
+  right: -15vw;
+  top: 25vh;
+  background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.2) 0%, rgba(249, 115, 22, 0.1) 50%, transparent 70%);
+  filter: blur(100px);
+}
+
+/* Soft Perspective Rays */
+.nova-rays {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  background: conic-gradient(
+    from 270deg at 50% 100%,
+    transparent 0deg,
+    rgba(37, 99, 235, 0.12) 15deg,
+    transparent 35deg,
+    rgba(124, 58, 237, 0.15) 55deg,
+    transparent 75deg,
+    rgba(192, 38, 211, 0.12) 95deg,
+    transparent 120deg,
+    rgba(245, 158, 11, 0.08) 145deg,
+    transparent 180deg
+  );
+  mask-image: radial-gradient(ellipse at 50% 100%, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 80%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 100%, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 80%);
+  filter: blur(18px);
+  mix-blend-mode: screen;
+}
+
+/* Variant 2: Dark Atmosphere */
+.nova-light-center-vertical {
+  width: 50vw;
+  height: 120vh;
+  left: 25vw;
+  top: -10vh;
+  background: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.25) 0%, rgba(192, 38, 211, 0.15) 30%, rgba(236, 72, 153, 0.08) 50%, transparent 70%);
+  filter: blur(120px);
+}
+
+/* Variant 3: Light Atmosphere */
+.nova-light-top-lavender {
+  width: 100vw;
+  height: 80vh;
+  left: 0;
+  top: -30vh;
+  background: radial-gradient(ellipse at top, rgba(139, 92, 246, 0.12) 0%, rgba(192, 38, 211, 0.05) 50%, transparent 80%);
+  filter: blur(80px);
+}
+
+.nova-light-bottom-blue {
+  width: 80vw;
+  height: 60vh;
+  right: -10vw;
+  bottom: -20vh;
+  top: auto;
+  background: radial-gradient(ellipse at bottom right, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+  filter: blur(90px);
+}
+
+/* Variant 4: Wave Atmosphere */
+.nova-waves {
+  position: absolute;
+  top: 30vh;
+  left: 0;
+  width: 100vw;
+  height: 70vh;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+.nova-wave-path {
+  animation: nova-wave-breathe 12s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.nova-wave-1 { animation-delay: 0s; }
+.nova-wave-2 { animation-delay: -4s; }
+.nova-wave-3 { animation-delay: -8s; }
+
+@keyframes nova-wave-breathe {
+  0% { opacity: 0.4; transform: translateY(0px) scaleY(1); }
+  50% { opacity: 1; transform: translateY(-8px) scaleY(1.05); }
+  100% { opacity: 0.4; transform: translateY(0px) scaleY(1); }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .nova-breathe, .nova-wave-path {
+    animation: none !important;
+    transform: scale(1) translateY(0) !important;
+    opacity: 0.9 !important;
+    filter: brightness(1) !important;
+  }
+}
